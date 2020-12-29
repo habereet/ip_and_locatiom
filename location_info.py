@@ -1,5 +1,6 @@
 from requests import get
 
+
 class location_info():
     def __init__(self):
         self.local_ip = self.set_local_ip()

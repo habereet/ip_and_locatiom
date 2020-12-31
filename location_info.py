@@ -11,8 +11,10 @@ class location_info():
         return get('https://api.ipify.org').text
 
     def set_location(self):
-        status, output = subprocess.getstatusoutput("termux-wifi-connectioninfo")
+        status, output = subprocess.getstatusoutput(
+            "termux-wifi-connectioninfo"
+        )
         if status == 0:
-          return 1
+            return 1
         else:
-          return 0
+            return 0

@@ -28,6 +28,7 @@ class location_info():
           "termux-wifi-connectioninfo"
         )
         if status == 0:
-            return 1
+            jsonData = json.loads(output)
+            return True if jsonData["supplicant_state"] == "COMPLETED" else False
         else:
-            return 0
+            return False

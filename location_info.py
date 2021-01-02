@@ -15,7 +15,7 @@ class location_info():
         return get('https://api.ipify.org').text
 
     def set_location(self):
-        status, output = subprocess.getstatusoutput(
+        status, output = self.callSubProcess(
             "termux-location"
         )
         if status == 0:
@@ -24,7 +24,7 @@ class location_info():
             return 0
     
     def set_wifi(self):
-        status, output = subprocess.getstatusoutput(
+        status, output = self.callSubProcess(
           "termux-wifi-connectioninfo"
         )
         if status == 0:
@@ -33,7 +33,7 @@ class location_info():
         else:
             return False
             
-    def callSubProcess(command):
+    def callSubProcess(self, command):
         status, output = subprocess.getstatusoutput(
           command
         )

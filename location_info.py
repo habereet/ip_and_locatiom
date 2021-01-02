@@ -19,9 +19,11 @@ class location_info():
             "termux-location"
         )
         if status == 0:
-            return 1
+            jsonData = json.loads(output)
+            coordinates = (jsonData["latitude"], jsonData["longitude"])
+            return coordinates
         else:
-            return 0
+            return False
     
     def set_wifi(self):
         status, output = self.callSubProcess(

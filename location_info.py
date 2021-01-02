@@ -32,3 +32,8 @@ class location_info():
             return True if jsonData["supplicant_state"] == "COMPLETED" else False
         else:
             return False
+            
+    def callSubProcess(command):
+        status, output = subprocess.getstatusoutput(
+          command
+        )

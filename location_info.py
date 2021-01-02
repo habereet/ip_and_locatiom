@@ -37,3 +37,4 @@ class location_info():
         status, output = subprocess.getstatusoutput(
           command
         )
+        return (status, output)

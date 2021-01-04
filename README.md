@@ -9,8 +9,8 @@ Runs only on Android devices
 
 
 ## To-Do
-- [ ] Convert Lat-Long to Address
-- [ ] Store if on Wi-Fi or Mobile Signal
+- [X] Convert Lat-Long to Address
+- [X] Store if on Wi-Fi or Mobile Signal
 - [ ] Store results -> Google Sheet
 - [ ] See how easy it is to add speedtest results to above
 - [ ] Implement with Tasker

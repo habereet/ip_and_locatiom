@@ -6,10 +6,12 @@ import json
 class location_info():
     def __init__(self):
         self.local_ip = self.set_local_ip()
-        #self.location = self.set_location()
+        self.location = self.set_location()
         print(self.set_location())
+        self.address = self.set_address() if self.set_location() != False else False
+        print(self.address)
+        self.wifi = self.set_wifi()
         print(self.set_wifi())
-        #self.wifi = self.set_wifi()
 
     def set_local_ip(self):
         return get('https://api.ipify.org').text
@@ -24,6 +26,11 @@ class location_info():
             return coordinates
         else:
             return False
+    
+    def set_location(self):
+        response = get(f'https://maps.googleapis.com/maps/api/geocode/json?latlng={self.location[0]},{self.location[0]}&key={APIKey}').text
+        jsonData = json.loads(response)
+        address = jsonData["results"][0]["formatted_address"]
     
     def set_wifi(self):
         status, output = self.callSubProcess(

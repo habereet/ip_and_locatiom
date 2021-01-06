@@ -11,6 +11,8 @@ Runs only on Android devices
 ## To-Do
 - [X] Convert Lat-Long to Address
 - [X] Store if on Wi-Fi or Mobile Signal
+- [ ] Comment code!
+- [ ] Add caching implementation for addresses
 - [ ] Store results -> Google Sheet
 - [ ] See how easy it is to add speedtest results to above
 - [ ] Implement with Tasker

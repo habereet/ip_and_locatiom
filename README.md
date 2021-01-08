@@ -7,6 +7,9 @@ Runs only on Android devices
 * Requires [Termux](https://play.google.com/store/apps/details?id=com.termux) and [Termux API](https://play.google.com/store/apps/details?id=com.termux.api)
 * After installing both, open Termux and run the following command: ```apt install termux-api```
 
+You will need an [API Key for Google Maps' API](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+
+Ensure that the key has access to the [Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview)
 
 ## To-Do
 - [X] Convert Lat-Long to Address

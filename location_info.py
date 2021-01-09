@@ -33,8 +33,7 @@ class location_info():
             jsonData = json.loads(output)
             # Build a tuple storing
             # latitude and longitude
-            coordinates = (jsonData["latitude"], jsonData["longitude"])
-            return coordinates
+            return (jsonData["latitude"], jsonData["longitude"])
         else:
             return False
 

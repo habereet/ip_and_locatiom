@@ -22,11 +22,17 @@ class location_info():
         return get('https://api.ipify.org').text
 
     def set_location(self):
+        # when set up, termux-location returns
+        # a json with information representing
+        # the devices location
+        # more info - https://wiki.termux.com/wiki/Termux-location
         status, output = self.callSubProcess(
             "termux-location"
         )
         if status == 0:
             jsonData = json.loads(output)
+            # Build a tuple storing
+            # latitude and longitude
             coordinates = (jsonData["latitude"], jsonData["longitude"])
             return coordinates
         else:

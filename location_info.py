@@ -18,6 +18,7 @@ class location_info():
         print(self.set_wifi())
 
     def set_local_ip(self):
+        # return your external IP
         return get('https://api.ipify.org').text
 
     def set_location(self):

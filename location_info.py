@@ -48,8 +48,7 @@ class location_info():
                        f'latlng={lat},{lon}&key={key}').text
         jsonData = json.loads(response)
         # return the first formatted address in the json
-        address = jsonData["results"][0]["formatted_address"]
-        return address
+        return jsonData["results"][0]["formatted_address"]
 
     def set_wifi(self):
         status, output = self.callSubProcess(

@@ -7,15 +7,20 @@ import os
 class location_info():
     def __init__(self):
         self.local_ip = self.set_local_ip()
-        print(self.local_ip)
+        print(f'IP Address - {self.local_ip}')
         self.location = self.set_location()
-        print(self.location)
+        print('Latitude and Longitude - '
+              f'{self.location}')
         self.address = (self.set_address()
                         if self.location is not False
                         else False)
-        print(self.address)
+        print(f'Address - {self.address}'
+              if self.address is not False else
+              'Address not found')
         self.wifi = self.set_wifi()
-        print(self.set_wifi())
+        print('Connected to Wi-Fi'
+              if self.set_wifi() is True else
+              'Not connected to Wi-Fi')
 
     def set_local_ip(self):
         # return your external IP

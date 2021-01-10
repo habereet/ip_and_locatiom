@@ -39,11 +39,15 @@ class location_info():
 
     def set_address(self):
         key = os.environ.get('GEOCODINGAPIKEY')
+        # get latitute and longitude from location tuple
         lat = self.location[0]
         lon = self.location[1]
+        # Get json response from Google Maps'
+        # Reverse Geocoding APi
         response = get('https://maps.googleapis.com/maps/api/geocode/json?'
                        f'latlng={lat},{lon}&key={key}').text
         jsonData = json.loads(response)
+        # return the first formatted address in the json
         address = jsonData["results"][0]["formatted_address"]
         return address
 

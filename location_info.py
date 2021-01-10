@@ -14,7 +14,8 @@ class location_info():
               'Not connected to Wi-Fi')
         self.location = self.set_location()
         print('Latitude and Longitude - '
-              f'{self.location}')
+              f'{self.location[0]}, '
+              f'{self.location[1]}')
         self.address = (self.set_address()
                         if self.location is not False
                         else False)

@@ -12,12 +12,12 @@ class location_info():
         print('Connected to Wi-Fi'
               if self.set_wifi() is True else
               'Not connected to Wi-Fi')
-        self.location = self.set_location()
+        self.map_coordinates = self.set_map_coordinates()
         print('Latitude and Longitude: '
-              f'{self.location[0]}, '
-              f'{self.location[1]}')
+              f'{self.map_coordinates[0]}, '
+              f'{self.map_coordinates[1]}')
         self.address = (self.set_address()
-                        if self.location is not False
+                        if self.map_coordinates is not False
                         else False)
         print(f'Address: {self.address}'
               if self.address is not False else
@@ -27,7 +27,7 @@ class location_info():
         # return your external IP
         return get('https://api.ipify.org').text
 
-    def set_location(self):
+    def set_map_coordinates(self):
         # when set up, termux-location returns
         # a json with information representing
         # the devices location
@@ -46,8 +46,8 @@ class location_info():
     def set_address(self):
         key = environ.get('GEOCODINGAPIKEY')
         # get latitute and longitude from location tuple
-        lat = self.location[0]
-        lon = self.location[1]
+        lat = self.map_coordinates[0]
+        lon = self.map_coordinates[1]
         # Get json response from Google Maps'
         # Reverse Geocoding APi
         response = get('https://maps.googleapis.com/maps/api/geocode/json?'

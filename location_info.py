@@ -1,7 +1,7 @@
 from requests import get
 from subprocess import getstatusoutput
 import json
-from  os import environ
+from os import environ
 
 
 class location_info():

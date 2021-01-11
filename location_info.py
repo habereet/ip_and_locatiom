@@ -66,9 +66,9 @@ class location_info():
         )
         if status == 0:
             jsonData = json.loads(output)
-            return (True
-                    if jsonData["supplicant_state"] == "COMPLETED"
-                    else False)
+            return (False
+                    if jsonData["supplicant_state"] == "DISCONNECTED"
+                    else True)
         else:
             return False
 

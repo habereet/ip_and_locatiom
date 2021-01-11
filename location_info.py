@@ -57,6 +57,10 @@ class location_info():
         return jsonData["results"][0]["formatted_address"]
 
     def set_wifi(self):
+        # when set up, termux-wifi-connectioninfo
+        # returns a json with representing
+        # the device's wifi info
+        # https://wiki.termux.com/wiki/Termux-wifi-connectioninfo
         status, output = self.callSubProcess(
           "termux-wifi-connectioninfo"
         )

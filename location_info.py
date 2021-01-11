@@ -1,7 +1,7 @@
 from requests import get
 from subprocess import getstatusoutput
 import json
-import os
+from  os import environ
 
 
 class location_info():
@@ -44,7 +44,7 @@ class location_info():
             return False
 
     def set_address(self):
-        key = os.environ.get('GEOCODINGAPIKEY')
+        key = environ.get('GEOCODINGAPIKEY')
         # get latitute and longitude from location tuple
         lat = self.location[0]
         lon = self.location[1]

@@ -44,10 +44,12 @@ class location_info():
             return False
 
     def set_address(self):
-        key = environ.get('GEOCODINGAPIKEY')
         # get latitute and longitude from location tuple
         lat = self.map_coordinates[0]
         lon = self.map_coordinates[1]
+        cache_results = self.check_cache((float(lat), float(lon)))
+        print(cache_results)
+        key = environ.get('GEOCODINGAPIKEY')
         # Get json response from Google Maps'
         # Reverse Geocoding APi
         response = get('https://maps.googleapis.com/maps/api/geocode/json?'
@@ -71,3 +73,10 @@ class location_info():
                     else True)
         else:
             return False
+
+    def check_cache(self, float_coordinates):
+        lat = round(float_coordinates[0], 4)
+        lon = round(float_coordinates[1], 4)
+        print((lat, lon))
+        _ = "addresses.cache"
+        return False

@@ -73,7 +73,6 @@ class location_info():
             return False
 
     def callSubProcess(self, command):
-        status, output = subprocess.getstatusoutput(
+        return subprocess.getstatusoutput(
           command
         )
-        return (status, output)

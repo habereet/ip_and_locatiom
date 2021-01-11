@@ -1,5 +1,5 @@
 from requests import get
-import subprocess
+from subprocess import getstatusoutput
 import json
 import os
 
@@ -32,7 +32,7 @@ class location_info():
         # a json with information representing
         # the devices location
         # more info - https://wiki.termux.com/wiki/Termux-location
-        status, output = self.callSubProcess(
+        status, output = getstatusoutput(
             "termux-location"
         )
         if status == 0:
@@ -61,7 +61,7 @@ class location_info():
         # returns a json with representing
         # the device's wifi info
         # https://wiki.termux.com/wiki/Termux-wifi-connectioninfo
-        status, output = self.callSubProcess(
+        status, output = getstatusoutput(
           "termux-wifi-connectioninfo"
         )
         if status == 0:
@@ -71,8 +71,3 @@ class location_info():
                     else True)
         else:
             return False
-
-    def callSubProcess(self, command):
-        return subprocess.getstatusoutput(
-          command
-        )

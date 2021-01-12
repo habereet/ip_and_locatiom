@@ -2,6 +2,7 @@ from requests import get
 from subprocess import getstatusoutput
 import json
 from os import environ
+from os import path
 
 
 class location_info():
@@ -48,15 +49,17 @@ class location_info():
         lat = self.map_coordinates[0]
         lon = self.map_coordinates[1]
         cache_results = self.check_cache((float(lat), float(lon)))
-        print(cache_results)
-        key = environ.get('GEOCODINGAPIKEY')
-        # Get json response from Google Maps'
-        # Reverse Geocoding APi
-        response = get('https://maps.googleapis.com/maps/api/geocode/json?'
-                       f'latlng={lat},{lon}&key={key}').text
-        jsonData = json.loads(response)
-        # return the first formatted address in the json
-        return jsonData["results"][0]["formatted_address"]
+        if cache_results is False:
+            key = environ.get('GEOCODINGAPIKEY')
+            # Get json response from Google Maps'
+            # Reverse Geocoding APi
+            response = get('https://maps.googleapis.com/maps/api/geocode/json?'
+                           f'latlng={lat},{lon}&key={key}').text
+            jsonData = json.loads(response)
+            # return the first formatted address in the json
+            address = jsonData["results"][0]["formatted_address"]
+            self.write_to_cache((float(lat), float(lon)))
+            return address
 
     def set_wifi(self):
         # when set up, termux-wifi-connectioninfo
@@ -75,8 +78,14 @@ class location_info():
             return False
 
     def check_cache(self, float_coordinates):
-        lat = round(float_coordinates[0], 4)
-        lon = round(float_coordinates[1], 4)
-        print((lat, lon))
-        _ = "addresses.cache"
-        return False
+        cache_path = "addresses.cache"
+        if path.exists(cache_path) is True:
+            lat = round(float_coordinates[0], 4)
+            lon = round(float_coordinates[1], 4)
+            print((lat, lon))
+        else:
+            return False
+
+    def write_to_cache(self, float_coordinates):
+        cache_path = "addresses.cache"
+        print(cache_path)

@@ -49,6 +49,8 @@ class location_info():
         lat = self.map_coordinates[0]
         lon = self.map_coordinates[1]
         cache_results = self.check_cache((float(lat), float(lon)))
+        # if the latitude and longitude
+        # are not in cache
         if cache_results is False:
             key = environ.get('GEOCODINGAPIKEY')
             # Get json response from Google Maps'
@@ -58,8 +60,12 @@ class location_info():
             jsonData = json.loads(response)
             # return the first formatted address in the json
             address = jsonData["results"][0]["formatted_address"]
-            self.write_to_cache((float(lat), float(lon)))
+            # write the latitude and longitude to cache
+            self.write_to_cache((float(lat), float(lon)), address)
             return address
+        # if latitude and longitude are in cache
+        else:
+            return cache_results
 
     def set_wifi(self):
         # when set up, termux-wifi-connectioninfo
@@ -79,13 +85,43 @@ class location_info():
 
     def check_cache(self, float_coordinates):
         cache_path = "addresses.cache"
+        # if the cache file exists
         if path.exists(cache_path) is True:
-            lat = round(float_coordinates[0], 4)
-            lon = round(float_coordinates[1], 4)
-            print((lat, lon))
+            lat = round(float_coordinates[0], 3)
+            lon = round(float_coordinates[1], 3)
+            # read the cache in
+            with open(cache_path) as json_file:
+                cache = json.load(json_file)
+                key = f'lat{lat},lon{lon}'
+                # check if latitude and
+                # longitude in cache
+                # return value or False
+                if key in cache.keys():
+                    return cache[key]
+                else:
+                    return False
         else:
             return False
 
-    def write_to_cache(self, float_coordinates):
+    def write_to_cache(self, float_coordinates, address):
         cache_path = "addresses.cache"
-        print(cache_path)
+        lat = round(float_coordinates[0], 3)
+        lon = round(float_coordinates[1], 3)
+        # if cache file does not exist
+        if path.exists(cache_path) is False:
+            # create a one-entry dict that
+            # will start our cache
+            cache = {f'lat{lat},lon{lon}': address}
+            # write cache as json
+            with open(cache_path, 'w') as outfile:
+                json.dump(cache, outfile)
+        # if cache file does exist
+        else:
+            # read cache file in as json
+            with open(cache_path) as json_file:
+                cache = json.load(json_file)
+            # add location to the dictionary
+            cache[f'lat{lat},lon{lon}'] = address
+            # write to cache file
+            with open(cache_path, 'w') as outfile:
+                json.dump(cache, outfile)

@@ -7,6 +7,7 @@ from os import path
 
 class location_info():
     def __init__(self):
+        self.cache_path = "addresses.cache"
         self.local_ip = self.set_local_ip()
         print(f'IP Address: {self.local_ip}')
         self.wifi = self.set_wifi()
@@ -84,44 +85,49 @@ class location_info():
             return False
 
     def check_cache(self, float_coordinates):
-        cache_path = "addresses.cache"
         # if the cache file exists
-        if path.exists(cache_path) is True:
+        if path.exists(self.cache_path) is True:
             lat = round(float_coordinates[0], 3)
             lon = round(float_coordinates[1], 3)
             # read the cache in
-            with open(cache_path) as json_file:
-                cache = json.load(json_file)
-                key = f'lat{lat},lon{lon}'
-                # check if latitude and
-                # longitude in cache
-                # return value or False
-                if key in cache.keys():
-                    return cache[key]
-                else:
-                    return False
+            cache = readJson(self.cache_path)
+            key = f'lat{lat},lon{lon}'
+            # check if latitude and
+            # longitude in cache
+            # return value or False
+            if key in cache.keys():
+                return cache[key]
+            else:
+                return False
         else:
             return False
 
     def write_to_cache(self, float_coordinates, address):
-        cache_path = "addresses.cache"
         lat = round(float_coordinates[0], 3)
         lon = round(float_coordinates[1], 3)
         # if cache file does not exist
-        if path.exists(cache_path) is False:
+        if path.exists(self.cache_path) is False:
             # create a one-entry dict that
             # will start our cache
             cache = {f'lat{lat},lon{lon}': address}
             # write cache as json
-            with open(cache_path, 'w') as outfile:
+            with open(self.cache_path, 'w') as outfile:
                 json.dump(cache, outfile)
         # if cache file does exist
         else:
             # read cache file in as json
-            with open(cache_path) as json_file:
-                cache = json.load(json_file)
+            cache = readJson(self.cache_path)
             # add location to the dictionary
             cache[f'lat{lat},lon{lon}'] = address
             # write to cache file
-            with open(cache_path, 'w') as outfile:
-                json.dump(cache, outfile)
+            writeJson(self.cache_path, cache)
+
+
+def readJson(cache_path):
+    with open(cache_path) as json_file:
+        return json.load(json_file)
+
+
+def writeJson(cache_path, cache):
+    with open(cache_path, 'w') as outfile:
+        json.dump(cache, outfile)

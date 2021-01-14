@@ -120,14 +120,17 @@ class location_info():
             # add location to the dictionary
             cache[f'lat{lat},lon{lon}'] = address
             # write to cache file
+            # TODO: add check that write was successful
             writeJson(self.cache_path, cache)
 
 
+# read json and return
 def readJson(cache_path):
     with open(cache_path) as json_file:
         return json.load(json_file)
 
 
+# write json (cache) to directory (cache_path)
 def writeJson(cache_path, cache):
     with open(cache_path, 'w') as outfile:
         json.dump(cache, outfile)
